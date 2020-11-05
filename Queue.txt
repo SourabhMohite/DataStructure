@@ -1,0 +1,117 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node
+{
+	int data;
+	struct node * next;
+}NODE,*PNODE,**PPNODE;
+
+void Enqueue(PPNODE Head,int no)
+{
+	PNODE newn=NULL;
+	newn=(PNODE)malloc(sizeof(PNODE));
+	
+	newn->next=NULL;
+	newn->data=no;
+	
+	if(*Head==NULL)
+	{
+		*Head=newn;
+	}
+	else
+	{
+	    PNODE temp=*Head;
+        while(temp->next!=NULL)
+		{
+			temp=temp->next;
+		}			
+		temp->next=newn;
+		
+	}
+}
+
+int Dequeue(PPNODE Head)
+{
+	int no=0;
+	
+	if(*Head==NULL)
+	{
+		printf("Queue is Empty");
+		return -1;
+	}
+	else
+	{
+		PNODE temp=*Head;
+		no=temp->data;
+		*Head=(*Head)->next;
+		free(temp);
+	}
+	return no;
+}
+
+void Display(PNODE Head)
+{
+	while(Head!=NULL)
+	{
+		printf("|%d|->",Head->data);
+		Head=Head->next;
+	}
+	printf("\n");
+}
+
+int Count(PNODE Head)
+{
+	int iCnt=0;
+	
+	while(Head!=NULL)
+	{
+		iCnt++;
+		Head=Head->next;
+	}
+	return iCnt;
+}
+
+int main()
+{
+    PNODE First=NULL;
+	int choice=1,Data=0,iRet=0,iPos=0;
+	
+	printf("........................\n");
+	printf("Welcome to Queue Application\n");
+	printf("........................\n");
+	
+	while(choice!=0)
+	{
+		printf("1.Enqueue\n");
+		printf("2.Dequeue\n");
+		printf("3.Display\n");
+		printf("4.Count\n");
+		printf("0.Exit\n");
+		
+		printf("Enter the choice:\n");
+		scanf("%d",&choice);
+		
+	switch(choice)
+	{
+	  case 1:printf("Enter the data you want to inserted\n");
+		   scanf("%d",&Data);
+		   Enqueue(&First,Data);
+		   break;
+	 case 2:Data=Dequeue(&First);
+		   printf("Removed Element is:%d\n",Data);
+		   break;
+	 case 3:Display(First);
+		   break;
+	 case 4:printf("Number of elements:%d\n",Count(First));
+		   break;
+	 case 0:printf("Thank You for using Application\n");
+		   break;
+     default:printf("Please enter valid choice\n");
+             break;
+    }
+		
+  }
+
+   return 0;
+}
